@@ -1,0 +1,41 @@
+{% extends 'base_2.html' %}
+{% load static %}
+
+
+{% block content %}
+<div class="d-flex h-100 text-center text-bg-dark">
+    <div class="cover-container d-flex w-100 p-3 mx-auto flex-column" style="background-image: url('{% static "images/athlete-feminine.jpg" %}'); background-size: cover; background-position: center; height: 800px;">
+        <main class="px-3 text-start" style="margin-top:150px;">
+            <h1 class="text-light fw-bold" style="text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);">BILLETTERIE DES JEUX OLYMPIQUES 2024</h1>
+            <p class="lead text-light" style="text-shadow: 2px 2px 4px rgba(0, 0, 0, 1);">Bienvenue sur la billetterie officielle des Jeux Olympiques et Paralympiques de Paris 2024 ! Pour vous connecter à votre compte ou en créer un, cliquez ci-dessous sur "Je me connecte".</p>
+            <p class="lead">
+                <a href="{% url 'offers_list' %}" class="btn btn-lg btn-light fw-bold border-white bg-white" style="box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);">Billetterie</a>
+            </p>
+        </main>
+    </div>
+</div>
+
+<div class="container mt-5">
+    <h2 class="pb-2 border-bottom">BILLETTERIE DES JEUX OLYMPIQUES ET PARALYMPIQUES</h2>
+    <div class="row row-cols-1 row-cols-lg-2 align-items-stretch g-4 py-5">
+        <div class="col" style="height: 400px;">
+            <a class="text-decoration-none" href="{% url 'offers_list' %}">
+                <div class="card card-cover h-100 overflow-hidden text-bg-dark rounded-4 shadow-lg" style="background-image: url('{% static "images/VIGNETTE_PARA_FR-201223.webp" %}'); background-size: cover; background-position: center;">
+                    <div class="d-flex flex-column h-100 p-5 pb-3 text-white text-shadow-1">
+                        <!-- <h3 class="pt-5 mt-5 mb-4 display-6 lh-1 fw-bold">Jeux Paralympiques</h3> -->
+                    </div>
+                </div>
+            </a>
+        </div>
+        <div class="col" style="height: 400px;">
+            <a class="text-decoration-none" href="{% url 'offers_list' %}">
+                <div class="card card-cover h-100 overflow-hidden text-bg-dark rounded-4 shadow-lg" style="background-image: url('{% static "images/VIGNETTE_OLY_FR-201223.webp" %}'); background-size: cover; background-position: center;">
+                    <div class="d-flex flex-column h-100 p-5 pb-3 text-white text-shadow-1">
+                        <!-- <h3 class="pt-5 mt-5 mb-4 display-6 lh-1 fw-bold">Jeux Olympiques</h3> -->
+                    </div>
+                </div>
+            </a>
+        </div>
+    </div>
+</div>
+{% endblock %}

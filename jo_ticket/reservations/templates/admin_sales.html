@@ -1,0 +1,27 @@
+<!-- templates/admin_sales.html -->
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2>Statistiques des Ventes</h2>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Nom de l'Offre</th>
+                <th>Prix</th>
+                <th>Ventes Totales</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for stat in sales_data %}
+                <tr>
+                    <td>{{ stat.offer.name }}</td>
+                    <td>{{ stat.offer.price }} €</td>
+                    <td>{{ stat.total_sales }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <a href="{% url 'home' %}" class="btn btn-primary">Retour à l'accueil</a>
+</div>
+{% endblock %}

@@ -1,0 +1,68 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <div class="container">
+        <h1 class="mt-5">Votre Panier</h1>
+        {% if cart.offers.all %}
+        <div class="row mt-4">
+            {% for offer in cart.offers.all %}
+            <div class="col-md-4 mb-3">
+                <div class="card">
+                    <div class="card-body">
+                        <h3 class="card-title">{{ offer.get_name_display }}</h3>
+                        <p class="card-text">{{ offer.decription }}</p>
+                        <img src="{{ offer.image.url}}" alt="{{ offer.name }}" class="img-fluid mb-4" style="width: 400px; height: 200px; object-fit: cover;">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <button class="btn btn-danger remove-from-cart" data-offer-id="{{ offer.id }}">Supprimer</button>
+                            <p class="card-text mb-0">Prix: {{ offer.price }} €</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        <br>
+        <div class="d-flex justify-content-between align-items-center mb-4 mt-4">
+            <h4>Total : {{ total }}€ </h4>
+            <form id="payment-form" method="post" action="{% url 'reserve_offer' cart.offers.first.id %}">
+                {% csrf_token %}
+                <button id="checkout-button" type="submit" class="btn btn-success mb-4">Procéder au paiement</button>
+            </form>
+        </div>
+        {% else %}
+            <p>Votre panier est vide.</p>
+        {% endif %}
+    </div>
+        
+        <script src="https://js.stripe.com/v3/"></script>
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script type="text/javascript">
+            $(document).ready(function() {
+                $('.remove-from-cart').click(function() {
+                    var offerId = $(this).data('offer-id');
+                    $.ajax({
+                        url: "{% url 'remove_from_cart' 0 %}".replace(0, offerId),
+                        method: "POST",
+                        headers: {
+                            "X-CSRFToken": "{{ csrf_token }}"
+                        },
+                        success: function(response) {
+                            var currentCount = parseInt($('#cart-count').text());
+                            if (!isNaN(currentCount)) {
+                                $('#cart-count').text(currentCount - 1);
+                            } else {
+                                $('#cart-count').text(1);
+                            }
+                            $('#offer-' + offerId).remove();
+                            location.reload();
+                        },
+                        error: function(response) {
+                            alert('Une erreur est survenue.');
+                        }
+                    });
+                });
+            });
+
+        </script>
+
+{% endblock %}

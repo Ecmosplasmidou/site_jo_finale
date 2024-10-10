@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+
+{% block title %}Connexion{% endblock %}
+
+<style>
+    body {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        background-color: #f8f9fa;
+    }
+    .login-container {
+        background-color: #fff;
+        padding: 2rem;
+        border-radius: 0.5rem;
+        box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.1);
+    }
+</style>
+
+{% block content %}
+
+<div class="login-container mt-5 mb-5">
+    <h2 class="text-center mb-4">Connexion</h2>
+    <form method="post" action="{% url 'login' %}">
+        {% csrf_token %}
+        <div class="mb-3">
+            <label for="id_username" class="form-label">Nom d'utilisateur</label>
+            <input type="text" name="username" class="form-control" id="id_username" required>
+        </div>
+        <div class="mb-3">
+            <label for="id_password" class="form-label">Mot de passe</label>
+            <input type="password" name="password" class="form-control" id="id_password" required>
+        </div>
+        <button type="submit" class="btn btn-primary w-100">Se connecter</button>
+    </form>
+    <div class="text-center mt-3">
+        <a href="{% url 'password_reset' %}">Mot de passe oublié ?</a>
+    </div>
+</div>
+
+{% endblock %}

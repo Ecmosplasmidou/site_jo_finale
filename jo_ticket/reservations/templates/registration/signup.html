@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+
+{% block title %}Connexion{% endblock %}
+
+<style>
+    body {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        background-color: #f8f9fa;
+    }
+    .signup-container {
+        background-color: #fff;
+        padding: 2rem;
+        border-radius: 0.5rem;
+        box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.1);
+    }
+</style>
+
+{% block content %}
+
+<div class="signup-container mt-5 mb-5">
+    <h2 class="text-center mb-4">Inscription</h2>
+    <form method="post" action="{% url 'signup' %}">
+        {% csrf_token %}
+        <div class="mb-3">
+            <label for="id_username" class="form-label">Nom d'utilisateur</label>
+            <input type="text" name="username" class="form-control" id="id_username" required>
+        </div>
+        <div class="mb-3">
+            <label for="id_email" class="form-label">Email</label>
+            <input type="email" name="email" class="form-control" id="id_email" required>
+        </div>
+        <div class="mb-3">
+            <label for="id_password1" class="form-label">Mot de passe</label>
+            <input type="password" name="password1" class="form-control" id="id_password1" required>
+        </div>
+        <div class="mb-3">
+            <label for="id_password2" class="form-label">Confirmer le mot de passe</label>
+            <input type="password" name="password2" class="form-control" id="id_password2" required>
+        </div>
+        <button type="submit" class="btn btn-primary w-100">S'inscrire</button>
+    </form>
+    <div class="text-center mt-3">
+        <a href="{% url 'login' %}">Déjà inscrit ? Connectez-vous</a>
+    </div>
+</div>
+
+{% endblock %}

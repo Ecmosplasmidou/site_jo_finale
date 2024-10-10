@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mt-5 mb-5">
+    <div class="card">
+        <div class="card-header bg-success text-white text-center">
+            <h2>Achat Réussi pour la réservation #{{ reservation.id }}</h2>
+        </div>
+        <div class="card-body">
+            <p class="text-center">Merci pour votre achat ! Voici un récapitulatif de votre commande :</p>
+            <div class="row d-flex align-items-center">
+                <div class="col-md-6">
+                    <ul class="list-group mb-3">
+                        <li class="list-group-item">
+                                {% for offer in reservation.offer.all %}
+                                    <b>Offre: {{ offer.name }}</b>
+                                {% endfor %}
+                        </li>
+                        <li class="list-group-item">
+                            <strong>Prix :</strong> <b>{{ total_price }}€</b>
+                        </li>
+                        <li class="list-group-item">
+                            <strong>Date de l'achat :</strong> <b>{{ reservation.created_at }}</b>
+                        </li>
+                        <li class="list-group-item">
+                            <strong>Acheté par :</strong> <b>{{ reservation.user.username }}</b>
+                        </li>
+                    </ul>
+                </div>
+                <div class="col-md-6 text-center">
+                    <img src="data:image/png;base64,{{ qr_image|safe }}" alt="QR Code" class="img-fluid">
+                </div>
+            </div>
+            <p class="text-center mt-4">Un mail de confirmation vous a été envoyé. Vous pouvez retrouver toutes vos commandes dans la rubrique <a href="{% url 'account' %}">"Mon compte"</a>.</p>
+            <div class="text-center">
+                <a href="{% url 'home' %}" class="btn btn-primary">Retour à l'accueil</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

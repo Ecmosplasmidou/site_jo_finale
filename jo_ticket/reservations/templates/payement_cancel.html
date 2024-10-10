@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block title %}Paiement Annulé{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card text-center">
+                <div class="card-header bg-danger text-white">
+                    <h2>Paiement Annulé</h2>
+                </div>
+                <div class="card-body">
+                    <p>Votre paiement a été annulé. Veuillez réessayer.</p>
+                    <a href="{% url 'cart' %}" class="btn btn-primary mt-3">Retour au panier</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
