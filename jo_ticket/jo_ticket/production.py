@@ -11,6 +11,7 @@ DATABASES = {
         ssl_require=True,
     ),
 }
+CELERY_BROKER_URL = config('REDIS_URL')
 
 
 CACHES = {
