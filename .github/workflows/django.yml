@@ -29,7 +29,7 @@ jobs:
             - name: Set up Python
               uses: actions/setup-python@v2
               with:
-                  python-version: 3.11
+                  python-version: ${{ matrix.python-version }} # Utiliser la version de la matrice
             
             - name: Install dependencies
               run: |
@@ -39,7 +39,7 @@ jobs:
     deploy:
         runs-on: ubuntu-latest
         name: Deploy Django Application
-        needs: [build]
+        needs: build
         steps:
             - name: Checkout Code Repository
               uses: actions/checkout@v2
