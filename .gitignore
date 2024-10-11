@@ -120,6 +120,4 @@ dmypy.json
 # Cython debug symbols
 cython_debug/
 
-# django settings
-django_settings.py
-settings.py
+
