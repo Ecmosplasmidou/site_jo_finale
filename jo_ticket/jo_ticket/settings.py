@@ -5,6 +5,7 @@ from decouple import config
 import os
 
 
+
 load_dotenv()
 
 
@@ -21,10 +22,7 @@ SECRET_KEY = config('DJANGO_SECRET_KEY', 'default-secret-key')
 STRIPE_SECRET_KEY = config('STRIPE_SECRET_KEY', 'default-stripe-secret-key')
 STRIPE_PUBLISHABLE_KEY = config('STRIPE_PUBLISHABLE_KEY', 'default-stripe-publishable-key')
 
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
 
-ALLOWED_HOSTS = config('ALLOWED_HOSTS', cast=lambda v: [s.strip() for s in v.split(',')])
 
 
 # Application definition
@@ -195,3 +193,7 @@ LOGGING = {
         "level": "DEBUG",
     },
 }
+
+# Import production settings if DJANGO_SETTINGS_MODULE is set to production
+if os.getenv('DJANGO_SETTINGS_MODULE') == 'jo_ticket.production':
+    from .production import *
