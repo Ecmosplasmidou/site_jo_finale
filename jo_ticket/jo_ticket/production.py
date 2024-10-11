@@ -1,6 +1,8 @@
 from settings import *
 import os
 import dj_database_url
+from decouple import config
+from pathlib import Path
 
 
 DATABASES = {
@@ -77,3 +79,20 @@ LOGGING = {
         },
     },
 }
+
+# logout and login redirect
+LOGIN_REDIRECT_URL = 'home'
+LOGOUT_REDIRECT_URL = 'home'
+
+
+BASE_DIR = Path(__file__).resolve().parent.parent
+
+MEDIA_URL = config('MEDIA_URL', default='/media/')
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+STATIC_URL = config('STATIC_URL', default='/static/')
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
+STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
