@@ -1,4 +1,4 @@
-from settings import *
+from .settings import *
 import os
 import dj_database_url
 from decouple import config
@@ -35,15 +35,15 @@ LOGGING = {
     "formatters": {
         "verbose": {
             "format": ("%(asctime)s [%(process)d] [%(levelname)s] " +
-                          "pathname=%(pathname)s lineno=%(lineno)s " +
-                          "funcname=%(funcName)s %(message)s"),
+                       "pathname=%(pathname)s lineno=%(lineno)s " +
+                       "funcname=%(funcName)s %(message)s"),
             "datefmt": "%Y-%m-%d %H:%M:%S",
         },
-    "simple": {
-        "format": "{levelname} {message}",
+        "simple": {
+            "format": "%(levelname)s %(message)s",  # Changez à '%' style
         },
     },
-    "handlers" : {
+    "handlers": {
         "null": {
             "level": "DEBUG",
             "class": "logging.NullHandler",
@@ -51,7 +51,7 @@ LOGGING = {
         "console": {
             "level": "DEBUG",
             "class": "logging.StreamHandler",
-            "formatter": "verbose"
+            "formatter": "verbose",
         }
     },
     "loggers": {
@@ -67,7 +67,7 @@ LOGGING = {
             "handlers": ["console"],
             "level": "DEBUG",
         },
-        "djago.request": {
+        "django.request": {  # Correction de la faute de frappe 'djago'
             "handlers": ["console"],
             "level": "DEBUG",
             "propagate": False,
@@ -79,6 +79,7 @@ LOGGING = {
         },
     },
 }
+
 
 # logout and login redirect
 LOGIN_REDIRECT_URL = 'home'
