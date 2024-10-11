@@ -1,1 +1,1 @@
-web: gunicorn jo_ticket.wsgi --log-file -
+web: gunicorn jo_ticket.jo_ticket.wsgi --log-file -
