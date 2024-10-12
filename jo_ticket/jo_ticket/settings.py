@@ -5,8 +5,6 @@ from decouple import config
 import dj_database_url
 import os
 
-
-
 load_dotenv()
 
 
@@ -22,8 +20,6 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = config('DJANGO_SECRET_KEY', 'default-secret-key')
 STRIPE_SECRET_KEY = config('STRIPE_SECRET_KEY', 'default-stripe-secret-key')
 STRIPE_PUBLISHABLE_KEY = config('STRIPE_PUBLISHABLE_KEY', 'default-stripe-publishable-key')
-
-
 
 
 # Application definition
@@ -199,3 +195,4 @@ LOGGING = {
 # # Import production settings if DJANGO_SETTINGS_MODULE is set to production
 # if os.getenv('DJANGO_SETTINGS_MODULE') == 'jo_ticket.jo_ticket.production':
 #     from .production import *
+
