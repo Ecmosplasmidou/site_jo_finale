@@ -7,8 +7,11 @@ import os
 
 load_dotenv()
 
-ALLOWED_HOSTS = config('ALLOWED_HOSTS', cast=lambda v: [s.strip() for s in v.split(',')])
-
+ALLOWED_HOSTS = [
+    'jo-ticketing-site-e53a4a320f9f.herokuapp.com',
+    'localhost',  
+    '127.0.0.1',  
+]
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
