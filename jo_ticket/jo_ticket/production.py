@@ -4,8 +4,6 @@ import dj_database_url
 from decouple import config
 from pathlib import Path
 
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
 
 DATABASES = {
     'default': dj_database_url.config(
