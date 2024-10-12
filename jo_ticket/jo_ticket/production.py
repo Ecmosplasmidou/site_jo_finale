@@ -5,6 +5,8 @@ from decouple import config
 from pathlib import Path
 
 
+DEBUG = True
+
 DATABASES = {
     'default': dj_database_url.config(
         env='DATABASE_URL', default='sqlite:///db.sqlite3',

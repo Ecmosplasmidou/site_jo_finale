@@ -8,8 +8,8 @@ import os
 load_dotenv()
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
 
+# DEBUG = True
 ALLOWED_HOSTS = [
     'jo-ticketing-site-e53a4a320f9f.herokuapp.com',
     'localhost',  
@@ -141,7 +141,7 @@ LOGOUT_REDIRECT_URL = 'home'
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 MEDIA_URL = config('MEDIA_URL', default='/media/')
-MEDIA_ROOT = os.path.join(BASE_DIR, 'jo_ticket', 'media')
+MEDIA_ROOT = os.path.join(BASE_DIR, 'jo_ticket', 'staticfiles', 'media')
 
 STATIC_URL = config('STATIC_URL', default='/static/')
 STATIC_ROOT = os.path.join(BASE_DIR, 'jo_ticket', 'staticfiles')
