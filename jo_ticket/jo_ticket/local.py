@@ -3,6 +3,9 @@ from .settings import *
 
 DATABASES = {
     "default": {
+        dj_database_url.config(default=config('DATABASE_URL'))
+    },
+    "sqlite3": {
         "ENGINE": "django.db.backends.sqlite3",
         "NAME": BASE_DIR / "db.sqlite3",
     },
