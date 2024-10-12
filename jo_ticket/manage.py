@@ -20,6 +20,6 @@ def main():
 
 
 if __name__ == "__main__":
-    os.environ.setdefault("DJANGO_SETTINGS_MODULE", "jo_ticket.jo_ticket.production")
+    os.environ.setdefault("DJANGO_SETTINGS_MODULE", "jo_ticket.jo_ticket.settings")
     execute_from_command_line(sys.argv)
     main()
