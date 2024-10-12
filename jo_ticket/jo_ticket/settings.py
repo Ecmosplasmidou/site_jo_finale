@@ -196,6 +196,6 @@ LOGGING = {
     },
 }
 
-# Import production settings if DJANGO_SETTINGS_MODULE is set to production
-if os.getenv('DJANGO_SETTINGS_MODULE') == 'jo_ticket.production':
-    from .production import *
+# # Import production settings if DJANGO_SETTINGS_MODULE is set to production
+# if os.getenv('DJANGO_SETTINGS_MODULE') == 'jo_ticket.jo_ticket.production':
+#     from .production import *
