@@ -2,6 +2,7 @@ from pathlib import Path
 from django.contrib import messages
 from dotenv import load_dotenv
 from decouple import config
+import dj_database_url
 import os
 
 
