@@ -68,7 +68,7 @@ MESSAGE_TAGS = {
 }
 
 
-ROOT_URLCONF = "jo_ticket.urls"
+ROOT_URLCONF = "jo_ticket.jo_ticket.urls"
 
 TEMPLATES = [
     {
@@ -87,7 +87,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = "jo_ticket.wsgi.application"
+WSGI_APPLICATION = "jo_ticket.jo_ticket.wsgi.application"
 
 
 # Database
@@ -138,10 +138,10 @@ LOGOUT_REDIRECT_URL = 'home'
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 MEDIA_URL = config('MEDIA_URL', default='/media/')
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_ROOT = os.path.join(BASE_DIR, 'jo_ticket', 'media')
 
 STATIC_URL = config('STATIC_URL', default='/static/')
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+STATIC_ROOT = os.path.join(BASE_DIR, 'jo_ticket', 'staticfiles')
 
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
