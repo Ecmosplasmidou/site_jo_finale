@@ -9,7 +9,7 @@ load_dotenv()
 
 # SECURITY WARNING: don't run with debug turned on in production!
 
-# DEBUG = True
+
 ALLOWED_HOSTS = [
     'jo-ticketing-site-e53a4a320f9f.herokuapp.com',
     'localhost',  
