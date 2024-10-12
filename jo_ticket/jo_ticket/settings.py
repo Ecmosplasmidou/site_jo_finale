@@ -68,7 +68,7 @@ MESSAGE_TAGS = {
 }
 
 
-ROOT_URLCONF = "jo_ticket.jo_ticket.urls"
+ROOT_URLCONF = "jo_ticket.urls"
 
 TEMPLATES = [
     {
@@ -87,7 +87,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = "jo_ticket.jo_ticket.wsgi.application"
+WSGI_APPLICATION = "jo_ticket.wsgi.application"
 
 
 # Database
