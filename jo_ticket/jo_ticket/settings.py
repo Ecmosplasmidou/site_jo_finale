@@ -177,10 +177,10 @@ CSRF_TRUSTED_ORIGINS = [
     'http://localhost', 
     'http://127.0.0.1', 
     'http://Site_des_JO.com',
-    'http://jo-ticketing-site-e53a4a320f9f.herokuapp.com'
+    'http://jo-ticketing-site-e53a4a320f9f.herokuapp.com/'
 ]
 
-CSRF_COOKIE_DOMAIN = '.Site_des_JO.com'
+# CSRF_COOKIE_DOMAIN = '.Site_des_JO.com'
 
 CSRF_COOKIE_SECURE = True
 
