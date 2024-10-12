@@ -7,8 +7,6 @@ from pathlib import Path
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = config('ALLOWED_HOSTS', cast=lambda v: [s.strip() for s in v.split(',')])
-
 DATABASES = {
     'default': dj_database_url.config(
         env='DATABASE_URL', default='sqlite:///db.sqlite3',
