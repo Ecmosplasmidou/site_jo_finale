@@ -40,6 +40,13 @@
         </div>
         {% endfor %}
     </div>
+    <div class="d-flex justify-content-between align-items-center mb-4 mt-4">
+        <h4>Total : {{ total }}€ </h4>
+        <form id="payment-form" method="post" action="{% url 'reserve_offer' cart.offers.first.id %}">
+            {% csrf_token %}
+            <button id="checkout-button" type="submit" class="btn btn-success mb-4">Procéder au paiement</button>
+        </form>
+    </div>
     {% else %}
     <p class="mt-4">Votre panier est vide.</p>
     {% endif %}

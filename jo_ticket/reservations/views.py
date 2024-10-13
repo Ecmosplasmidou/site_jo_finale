@@ -132,9 +132,16 @@ def add_to_cart(request, offer_id):
     if request.method == 'POST':
         offer = get_object_or_404(Offer, id=offer_id)
         cart, created = Cart.objects.get_or_create(user=request.user)
+        
+        # Vérifiez si l'offre est déjà dans le panier
+        if cart.offers.filter(id=offer_id).exists():
+            messages.info(request, 'Le billet est déjà dans votre panier.')
+            return JsonResponse({'message': 'Le billet est déjà dans votre panier.'}, status=200)
+        
         cart.offers.add(offer)
-        messages.success(request, 'Le billet à été ajoutée au panier !')
+        messages.success(request, 'Le billet a été ajouté au panier !')
         return JsonResponse({'message': 'Offre ajoutée au panier !'}, status=200)
+    
     return JsonResponse({'error': 'Requête invalide.'}, status=400)
 
 
