@@ -133,7 +133,7 @@ def add_to_cart(request, offer_id):
         offer = get_object_or_404(Offer, id=offer_id)
         cart, created = Cart.objects.get_or_create(user=request.user)
         cart.offers.add(offer)
-        # messages.success(request, 'Le billet à été ajoutée au panier !')
+        messages.success(request, 'Le billet à été ajoutée au panier !')
         return JsonResponse({'message': 'Offre ajoutée au panier !'}, status=200)
     return JsonResponse({'error': 'Requête invalide.'}, status=400)
 

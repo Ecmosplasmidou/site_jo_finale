@@ -16,7 +16,7 @@
                     <p class="card-text text-center">{{ offer.decription }}</p>
                     <div class="mt-auto">
                         <p class="card-text text-center mb-3 text-dark fs-4" 
-                           style="text-shadow: 4px 4px 8px rgba(0, 0, 0, 1.5); background-color: rgba(255, 255, 255, 0.7); border-radius: 7px;">
+                           style="text-shadow: 4px 4px 8px rgba(0, 0, 0, 1.5); background-color: rgba§; border-radius: 7px;">
                             <b>Prix: {{ offer.price }} €</b>
                         </p>
                         <div class="text-center">
@@ -32,4 +32,38 @@
     <p class="mt-4">Votre panier est vide.</p>
     {% endif %}
 </div>
+
+
+
+<script src="https://js.stripe.com/v3/"></script>
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script type="text/javascript">
+            $(document).ready(function() {
+                $('.remove-from-cart').click(function() {
+                    var offerId = $(this).data('offer-id');
+                    $.ajax({
+                        url: "{% url 'remove_from_cart' 0 %}".replace(0, offerId),
+                        method: "POST",
+                        headers: {
+                            "X-CSRFToken": "{{ csrf_token }}"
+                        },
+                        success: function(response) {
+                            var currentCount = parseInt($('#cart-count').text());
+                            if (!isNaN(currentCount)) {
+                                $('#cart-count').text(currentCount - 1);
+                            } else {
+                                $('#cart-count').text(1);
+                            }
+                            $('#offer-' + offerId).remove();
+                            location.reload();
+                        },
+                        error: function(response) {
+                            alert('Une erreur est survenue.');
+                        }
+                    });
+                });
+            });
+
+        </script>
+
 {% endblock %}
