@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load tz %}
 {% block title %}Mon Compte{% endblock %}
 {% block content %}
 <div class="container mt-5 mb-5">
@@ -20,7 +21,7 @@
                         {% if reservations %}
                             {% for reservation in reservations %}
                             <li class="list-group-item d-flex justify-content-between align-items-center">
-                                <span>Commande du: <b>{{ reservation.created_at }}</b></span>
+                                <span>Commande du: <b>{{ reservation.created_at|localtime }}</b></span>
                                 <a class="btn btn-info btn-sm" href="{% url 'account_detail' reservation.id %}">Détail de la commande</a>
                             </li>
                             {% endfor %}

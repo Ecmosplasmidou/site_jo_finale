@@ -7,8 +7,6 @@ import os
 
 load_dotenv()
 
-# SECURITY WARNING: don't run with debug turned on in production!
-
 
 ALLOWED_HOSTS = [
     'jo-ticketing-site-e53a4a320f9f.herokuapp.com',
@@ -17,7 +15,7 @@ ALLOWED_HOSTS = [
 ]
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
-BASE_DIR = Path(__file__).resolve().parent.parent
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 
 # Quick-start development settings - unsuitable for production
@@ -61,7 +59,14 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    'django.middleware.locale.LocaleMiddleware',
 ]
+
+TIME_ZONE = 'Europe/Paris'
+
+USE_TZ = True
+
+USE_L10N = True
 
 
 MESSAGE_TAGS = {
@@ -100,10 +105,10 @@ WSGI_APPLICATION = "jo_ticket.wsgi.application"
 
 DATABASES = {
     "default": dj_database_url.config(default=config('DATABASE_URL')),  # Utilisation correcte pour l'URL de la base de données
-    "sqlite3": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
-    },
+    # "sqlite3": {
+    #     "ENGINE": "django.db.backends.sqlite3",
+    #     "NAME": BASE_DIR / "db.sqlite3",
+    # },
     "mysql": {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': config('DB_NAME', default='jo_ticket'),
@@ -138,13 +143,13 @@ LOGIN_REDIRECT_URL = 'home'
 LOGOUT_REDIRECT_URL = 'home'
 
 
-BASE_DIR = Path(__file__).resolve().parent.parent
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 MEDIA_URL = config('MEDIA_URL', default='/media/')
-MEDIA_ROOT = os.path.join(BASE_DIR, 'jo_ticket', 'staticfiles', 'media')
+MEDIA_ROOT = os.path.join(BASE_DIR, 'jo_ticket', 'media')
 
 STATIC_URL = config('STATIC_URL', default='/static/')
-STATIC_ROOT = os.path.join(BASE_DIR, 'jo_ticket', 'staticfiles')
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 

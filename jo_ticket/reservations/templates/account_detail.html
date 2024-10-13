@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load tz %}
 
 {% block title %}Détail de la commande{% endblock %}
 
@@ -28,7 +29,7 @@
                             Prix: <b>{{ total_price }}€</b>
                         </li>
                         <li class="list-group-item">
-                            Date de l'achat: <b>{{ reservation.created_at }}</b>
+                            Date de l'achat: <b>{{ reservation.created_at|localtime }}</b>
                         </li>
                         <li class="list-group-item">
                             Acheté par: <b>{{ reservation.user.username }}</b>

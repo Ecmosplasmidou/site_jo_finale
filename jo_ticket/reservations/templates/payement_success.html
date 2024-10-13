@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 
+{% load tz %}
 {% block content %}
 <div class="container mt-5 mb-5">
     <div class="card">
@@ -20,7 +21,7 @@
                             <strong>Prix :</strong> <b>{{ total_price }}€</b>
                         </li>
                         <li class="list-group-item">
-                            <strong>Date de l'achat :</strong> <b>{{ reservation.created_at }}</b>
+                            <strong>Date de l'achat :</strong> <b>{{ reservation.created_at|localtime }}</b>
                         </li>
                         <li class="list-group-item">
                             <strong>Acheté par :</strong> <b>{{ reservation.user.username }}</b>

@@ -82,6 +82,8 @@ def checkout(request, reservation_id):
         'session_id': session.id,
         'stripe_public_key': stripe_public_key,
         'total': total,
+        'reservation': reservation,
+        'offer': cart.offers.all()
     })
 
 
