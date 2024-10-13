@@ -1,75 +1,62 @@
+{% load custom_filters %}
 <!DOCTYPE html>
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Confirmation de votre achat</title>
+    <title>Site des JO</title>
     <style>
         body {
             font-family: Arial, sans-serif;
-            line-height: 1.6;
+            background-color: #f8f9fa;
+            color: #343a40;
+            margin: 0;
+            padding: 0;
         }
         .container {
             width: 80%;
             margin: 0 auto;
+            background-color: #ffffff;
             padding: 20px;
-            border: 1px solid #ddd;
-            border-radius: 10px;
-            background-color: #f9f9f9;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         }
         h2 {
-            color: #333;
+            color: #007bff;
         }
         ul {
             list-style-type: none;
             padding: 0;
         }
-        li {
+        ul li {
             margin-bottom: 10px;
-        }
-        .qr-code {
-            text-align: center;
-            margin-top: 20px;
         }
         .btn {
             display: inline-block;
             padding: 10px 20px;
-            margin-top: 20px;
             font-size: 16px;
-            color: white;
-            background-color: red;
-            border: none;
-            border-radius: 5px;
+            color: #ffffff;
+            background-color: #28a745;
             text-decoration: none;
+            border-radius: 5px;
         }
-        .logo {
-            text-align: center;
-            margin-bottom: 20px;
+        .btn:hover {
+            background-color: #218838;
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <div class="logo">
-            <!-- <img src="{{ logo_url }}" alt="Paris 2024 Logo" width="200"> -->
-        </div>
         <h2>Merci pour votre achat par l'équipe des JO!</h2>
         <p>Voici un récapitulatif de votre commande :</p>
         <ul>
-            <li><strong>Réservation #:</strong> {{ reservation.id }}</li>
-            <li><strong>Offres:</strong>
-                <ul>
-                    {{ items_detail|safe }}
-                </ul>
-            </li>
+            <li><strong>Réservation #</strong> {{ reservation.id }}</li>
+            <li><strong>Offres:</strong> {{ items_detail|safe }}</li>
             <li><strong>Prix total:</strong> {{ total_price }} €</li>
-            <li><strong>Date de l'achat:</strong> {{ reservation.created_at }}</li>
+            <li><strong>Date de l'achat:</strong> {{ reservation.created_at|add_hours:2|date:"d/m/Y H:i" }}</li>
         </ul>
-        <p>Vous trouverez le Qr-code en piéce jointe de ce mail :</p>
-        <!-- <div class="qr-code">
-            <img src="data:image/png;base64,{{ qr_image }}" alt="QR Code">
-        </div> -->
-        <a href="{{ account_url }}" class="btn">Mon compte</a>
+        <p>Vous trouverez le Qr-code en pièce jointe de ce mail :</p>
+        <a href="{% url 'account' %}" class="btn">Mon compte</a>
     </div>
 </body>
 </html>

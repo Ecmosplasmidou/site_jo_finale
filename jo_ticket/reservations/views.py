@@ -142,12 +142,13 @@ def add_to_cart(request, offer_id):
 def cart(request):
     try:
         cart = Cart.objects.get(user=request.user)
+        offers = cart.offers.all()
         total = sum([offer.price for offer in cart.offers.all()])
-        
     except Cart.DoesNotExist:
         cart = Cart.objects.create(user=request.user)
+        offers = []
         total = 0
-    return render(request, 'cart.html', {'cart': cart, 'total' : total})
+    return render(request, 'cart.html', {'cart': cart, 'total': total, 'offers': offers})
 
 
 def remove_from_cart(request, offer_id):
