@@ -3,18 +3,22 @@
 
 {% block content %}
 <div class="d-flex h-100 text-center text-bg-dark">
-    <div class="cover-container d-flex w-100 p-3 mx-auto flex-column" style="background-image: url('{% static "images/athlete-feminine.jpg" %}'); background-size: cover; background-position: center; height: 550px;">
+    <div class="cover-container d-flex w-100 p-3 mx-auto flex-column" style="background-image: url('{% static "images/athlete-feminine.jpg" %}'); background-size: cover; background-position: center; height: 700px;">
         <main class="px-3 text-start" style="margin-top:150px;">
             <h1 class="text-light fw-bold" style="text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);">BILLETTERIE DES JEUX OLYMPIQUES 2024</h1>
-            <p class="lead text-dark" style="text-shadow: 4px 4px 8px rgba(0, 0, 0, 1.5);background-color: rgba(255, 255, 255, 0.4);padding: 10px;border-radius: 5px;">Bienvenue sur la billetterie officielle des Jeux Olympiques et Paralympiques de Paris 2024 ! Pour vous connecter à votre compte ou en créer un, cliquez ci-dessous sur "Je me connecte".</p>
+            {% if user.is_authenticated %}
+            <p class="lead text-dark" style="text-shadow: 4px 4px 8px rgba(0, 0, 0, 1.5);background-color: rgba(255, 255, 255, 0.4);padding: 10px;border-radius: 5px;">Les Jeux Olympiques et Paralympiques de Paris 2024 promettent d'être un événement spectaculaire, réunissant les meilleurs athlètes du monde entier pour célébrer l'excellence sportive, l'amitié et le respect. Cet événement historique marquera la troisième fois que Paris accueille les Jeux Olympiques, après 1900 et 1924, et la première fois que la ville accueille les Jeux Paralympiques.</p>
             <p class="lead">
                 <a href="{% url 'offers_list' %}" class="btn btn-lg btn-light fw-bold border-white bg-white" style="box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);">Billetterie</a>
             </p>
+            {% else %}
+            <p class="lead text-dark" style="text-shadow: 4px 4px 8px rgba(0, 0, 0, 1.5);background-color: rgba(255, 255, 255, 0.4);padding: 10px;border-radius: 5px;">Bienvenue sur la billetterie officielle des Jeux Olympiques et Paralympiques de Paris 2024 ! Pour vous connecter à votre compte ou en créer un, cliquez sur "Connexion".</p>
+            {% endif %}
         </main>
     </div>
 </div>
 
-<div class="container mt-5">
+<div class="container" style="margin-top:170px">
     <h2 class="pb-2 border-bottom">BILLETTERIE DES JEUX OLYMPIQUES ET PARALYMPIQUES</h2>
     <div class="row row-cols-1 row-cols-lg-2 align-items-stretch g-4 py-5">
         <div class="col" style="height: 400px;">
@@ -37,4 +41,54 @@
         </div>
     </div>
 </div>
+<div class="container">
+    <h2 class="pb-2 border-bottom">DECOUVREZ LES EPREUVES OLYMPIQUES</h2>
+    <div class="row row-cols-1 row-cols-lg-2 align-items-stretch g-4 py-5">
+        <!-- Ajoutez ici les cartes des sports -->
+        <div class="col">
+            <div class="card h-100 shadow-sm">
+                <img src="{% static 'images/athlete-feminine.jpg' %}" class="card-img-top" alt="Athlétisme">
+                <div class="card-body">
+                    <h3 class="card-title">Athlétisme</h3>
+                    <p class="card-text">L'athlétisme est l'un des sports les plus anciens et les plus emblématiques des Jeux Olympiques. Il englobe une variété d'épreuves de course, de saut et de lancer, mettant en avant la vitesse, l'endurance, la force et la technique des athlètes. Les compétitions d'athlétisme se déroulent généralement dans un stade, avec des épreuves telles que le sprint, le marathon, le saut en hauteur, le saut à la perche, le lancer du javelot et bien d'autres.</p>
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            <div class="card h-100 shadow-sm">
+                <img src="{% static 'images/natation.jpg' %}" class="card-img-top" alt="Natation">
+                <div class="card-body">
+                    <h3 class="card-title">Natation</h3>
+                    <p class="card-text">La natation est un sport incontournable des Jeux Olympiques, avec des épreuves de nage libre, de dos, de brasse et de papillon. Les nageurs doivent faire preuve de vitesse, d'endurance et de technique pour exceller dans leurs disciplines respectives. Les compétitions de natation sont souvent parmi les plus suivies et les plus excitantes des Jeux Olympiques, avec des courses qui se jouent parfois à quelques centièmes de seconde.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="col">
+            <div class="card h-100 shadow-sm">
+                <img src="{% static 'images/judo.jpg' %}" class="card-img-top" alt="Judo">
+                <div class="card-body">
+                    <h3 class="card-title">Judo</h3>
+                    <p class="card-text">Le judo est un art martial et un sport de combat d'origine japonaise, fondé par Jigoro Kano en 1882. Le mot "judo" signifie "voie de la souplesse", et le sport met l'accent sur l'utilisation de la technique et de la stratégie plutôt que sur la force brute. Les judokas, ou pratiquants de judo, s'affrontent en utilisant des techniques de projection, de contrôle au sol et de soumission pour marquer des points et remporter des victoires.
+
+Le judo est non seulement un sport de compétition, mais aussi une discipline qui enseigne des valeurs telles que le respect, la discipline et la persévérance. Aux Jeux Olympiques, le judo est un événement très attendu, avec des compétitions dans différentes catégories de poids pour les hommes et les femmes. Les judokas du monde entier se préparent intensivement pour avoir l'honneur de représenter leur pays et de concourir pour les médailles olympiques. Les combats de judo sont souvent spectaculaires et démontrent la maîtrise technique et la détermination des athlètes.</p>
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            <div class="card h-100 shadow-sm">
+                <img src="{% static 'images/boxe.jpg' %}" class="card-img-top" alt="Boxe">
+                <div class="card-body">
+                    <h3 class="card-title">Boxe</h3>
+                    <p class="card-text">La boxe est un sport de combat où deux adversaires s'affrontent en utilisant uniquement leurs poings, avec des règles strictes pour assurer la sécurité. Ce sport exige non seulement de la force physique, mais aussi de la stratégie, de la rapidité et de l'endurance. Les boxeurs doivent maîtriser diverses techniques de frappe, de défense et de déplacement pour dominer leurs adversaires.
+
+Aux Jeux Olympiques, la boxe est un événement très attendu, avec des compétitions dans différentes catégories de poids pour les hommes et les femmes. Les boxeurs olympiques s'entraînent intensivement pour représenter leur pays et concourir pour les médailles, offrant des combats passionnants et souvent spectaculaires. La boxe olympique est connue pour son esprit sportif et son respect des règles, faisant de chaque combat un véritable spectacle de compétence et de détermination.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 {% endblock %}
+
+
+
