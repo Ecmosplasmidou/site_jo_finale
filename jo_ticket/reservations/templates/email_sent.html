@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+
+{% block title %}Email envoyé{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-center align-items-center vh-100 bg-light">
+    <div class="container text-center p-5 bg-white rounded shadow" style="max-width: 600px;">
+        <h1 class="text-success mb-4">Email envoyé !</h1>
+        <p class="lead mb-4">Merci pour votre message. Nous vous répondrons dans les plus brefs délais.</p>
+        <a href="{% url 'home' %}" class="btn btn-primary">Retour à l'accueil</a>
+    </div>
+</div>
+{% endblock %}

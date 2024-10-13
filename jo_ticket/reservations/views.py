@@ -13,6 +13,7 @@ from django.views import generic
 from django.urls import reverse_lazy
 from django.contrib.auth.forms import UserCreationForm
 from django.template.loader import render_to_string
+from .forms import ContactUsForm
 import uuid
 import stripe
 import io
@@ -236,6 +237,24 @@ def payement_success(request, reservation_id):
     else:
         messages.error(request, 'Le paiement a échoué.')
         return redirect('cart')
+    
+def contact(request):
+    if request.method == 'POST':
+        form = ContactUsForm(request.POST)
+        
+        if form.is_valid():
+            send_mail(subject=f"Message from {form.cleaned_data['nom'] or 'Anonyme'} - {form.cleaned_data['email']} via MerchEx Contact Form Us Page",
+            message=form.cleaned_data['message'],
+            from_email=form.cleaned_data['email'],
+            recipient_list=['ecmosdev@gmail.com'],)
+            messages.success(request, 'Votre message a bien été envoyé.')
+        return redirect('email-sent')
+    else:
+        form = ContactUsForm()
+    return render (request, "contact.html", {"form": form})
+
+def email_sent(request):
+    return render(request, "email_sent.html")
 
 def payement_cancel(request, reservation_id):
     reservation = get_object_or_404(Reservation, pk=reservation_id)
