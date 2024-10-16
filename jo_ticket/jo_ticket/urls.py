@@ -13,6 +13,8 @@ urlpatterns = [
     
     path("", views.home, name="home"),
     path("accueil/", views.home, name="home"),
+    path("contact-us/", views.contact, name="contact"),
+    path("email-sent/", views.email_sent, name="email-sent"),
     
     path("offres/", views.offers_list, name="offers_list"),
     path("panier/", views.cart, name="cart"),
@@ -40,11 +42,11 @@ urlpatterns = [
     path('stripe/webhook/', views.stripe_webhook, name='stripe_webhook'),
     
 ]
-if settings.DEBUG:
-    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
 
 if settings.DEBUG:
     urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 else:
     urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
     

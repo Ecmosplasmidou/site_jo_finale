@@ -1,16 +1,7 @@
-"""
-WSGI config for jo_ticket project.
-
-It exposes the WSGI callable as a module-level variable named ``application``.
-
-For more information on this file, see
-https://docs.djangoproject.com/en/5.0/howto/deployment/wsgi/
-"""
-
 import os
-
 from django.core.wsgi import get_wsgi_application
 
-os.environ.setdefault("DJANGO_SETTINGS_MODULE", "jo_ticket.settings")
+# Configurez l'environnement Django
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "jo_ticket.settings")  # Vérifiez que cela pointe vers le bon fichier settings.py
 
-application = get_wsgi_application()
+application = get_wsgi_application()  # C'est ce qui sera importé par waitress
