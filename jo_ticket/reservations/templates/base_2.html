@@ -123,23 +123,29 @@
     </header>
         {% block content %}
         {% endblock %}
-    <footer class="py-5 ps-1 bg-primary mt-auto">
-        <div class="row text-white">
-            <div class="col-12 col-md text-center text-md-start" style="margin-left: 20px;">
-                <a href="{% url 'home' %}"><img src="{% static "images/Paris 2024 - Logo HD.png" %}" alt="Logo" style="width: 250px; height: 125px;"></a>
-                <a class="text-white" href="https://olympics.com/fr/paris-2024/" target="_blank"><small class="d-block ms-5 mb-3 fw-bold">Paris2024.org</small></a>
+        <footer class="py-5 bg-primary mt-auto">
+            <div class="container">
+                <div class="row text-white">
+                    <div class="col-12 col-md-6 text-center text-md-start mb-4 mb-md-0">
+                        <a href="{% url 'home' %}">
+                            <img src="{% static 'images/Paris 2024 - Logo HD.png' %}" alt="Logo" class="img-fluid" style="max-width: 250px; height: auto;">
+                        </a>
+                        <a class="text-white d-block mt-3" href="https://olympics.com/fr/paris-2024/" target="_blank">
+                            <small class="fw-bold">Paris2024.org</small>
+                        </a>
+                    </div>
+                    <div class="col-12 col-md-6 text-center text-md-end">
+                        <h5>Crédit</h5>
+                        <ul class="list-unstyled text-small">
+                            <li><a class="text-white" href="#">Conditions Générales de Vente</a></li>
+                            <li><a class="text-white" href="#">Conditions Générales d'Utilisation</a></li>
+                            <li><a class="text-white" href="#">Mentions Légales</a></li>
+                            <li><a class="text-white" href="#">Politique de Confidentialité</a></li>
+                        </ul>
+                    </div>
+                </div>
             </div>
-            <div class="col-6 col-md text-md-end me-5">
-                <h5>Crédit</h5>
-                <ul class="list-unstyled text-small">
-                    <li><a class="text-white" href="#">Conditions Générales de Vente</a></li>
-                    <li><a class="text-white" href="#">Conditions Générales d'Utilisation</a></li>
-                    <li><a class="text-white" href="#">Mentions Légales</a></li>
-                    <li><a class="text-white" href="#">Politique de Confidentialité</a></li>
-                </ul>
-            </div>
-        </div>
-    </footer>
+        </footer>
 </body>
 
 </html>
