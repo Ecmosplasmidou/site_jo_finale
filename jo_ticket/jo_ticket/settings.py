@@ -10,8 +10,6 @@ load_dotenv()
 
 ALLOWED_HOSTS = [
     'jo-ticketing-site-e53a4a320f9f.herokuapp.com',
-    'localhost',  
-    '127.0.0.1',  
 ]
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -104,17 +102,13 @@ WSGI_APPLICATION = "jo_ticket.wsgi.application"
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
 DATABASES = {
-    "default": dj_database_url.config(default=config('DATABASE_URL')),  # Utilisation correcte pour l'URL de la base de données
-    # "sqlite3": {
-    #     "ENGINE": "django.db.backends.sqlite3",
-    #     "NAME": BASE_DIR / "db.sqlite3",
-    # },
+    "default": dj_database_url.config(default=config('DATABASE_URL')),  
     "mysql": {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': config('DB_NAME', default='jo_ticket'),
-        'USER': config('DB_USER', default='root'),  # Utilisez config pour obtenir l'utilisateur aussi
-        'PASSWORD': config('DB_PASSWORD', default='root'),
-        'HOST': config('DB_HOST', default='localhost'),
+        'USER': config('DB_USER', default='root'),
+        'PASSWORD': config('DB_PASSWORD'),
+        'HOST': config('DB_HOST'),
         'PORT': config('DB_PORT', default='3306'),
     }
 }
@@ -179,8 +173,6 @@ STATIC_URL = "static/"
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 CSRF_TRUSTED_ORIGINS = [
-    'http://localhost', 
-    'http://127.0.0.1', 
     'http://Site_des_JO.com',
     'http://jo-ticketing-site-e53a4a320f9f.herokuapp.com/'
 ]
