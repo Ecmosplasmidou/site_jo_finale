@@ -193,7 +193,7 @@ def payement_success(request, reservation_id):
         total_price = 0
         
         for offer in cart.offers.all():
-            items_detail += f"{offer.name} - {offer.price}€\n"
+            items_detail += f"{offer.name} - \n"
             total_price += offer.price
 
         qr_data = f"""
@@ -218,6 +218,8 @@ def payement_success(request, reservation_id):
         
         buffer = io.BytesIO()
         img.save(buffer)
+        buffer.seek(0)  # Assurez-vous que le buffer est réinitialisé avant l'attachement
+        
         qr_image = base64.b64encode(buffer.getvalue()).decode()
         
         reservation.qr_code = qr_image
@@ -230,9 +232,11 @@ def payement_success(request, reservation_id):
             'total_price': total_price,
             'account_url': request.build_absolute_uri('/account/')
         })
+        
         recipient_list = [stripe_email]  
         email = EmailMultiAlternatives(subject, html_content, 'ecmosdev@gmail.com', recipient_list)
         email.attach_alternative(html_content, "text/html")
+        email.content_subtype = 'html'  # Définir le contenu en HTML
         email.attach('qrcode.png', buffer.getvalue(), 'image/png')
         email.send()
         
@@ -249,6 +253,7 @@ def payement_success(request, reservation_id):
     else:
         messages.error(request, 'Le paiement a échoué.')
         return redirect('cart')
+
     
 def contact(request):
     if request.method == 'POST':
