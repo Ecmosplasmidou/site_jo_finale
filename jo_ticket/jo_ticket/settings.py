@@ -9,7 +9,7 @@ load_dotenv()
 
 
 ALLOWED_HOSTS = [
-    'jo-ticketing-site-e53a4a320f9f.herokuapp.com',  
+    'jo-ticketing-site-e53a4a320f9f.herokuapp.com',
 ]
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -106,7 +106,7 @@ DATABASES = {
     "mysql": {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': config('DB_NAME', default='jo_ticket'),
-        'USER': config('DB_USER', default='root'), 
+        'USER': config('DB_USER', default='root'),  # Utilisez config pour obtenir l'utilisateur aussi
         'PASSWORD': config('DB_PASSWORD', default='root'),
         'HOST': config('DB_HOST'),
         'PORT': config('DB_PORT', default='3306'),
