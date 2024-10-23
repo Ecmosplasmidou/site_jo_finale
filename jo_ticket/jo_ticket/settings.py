@@ -9,7 +9,7 @@ load_dotenv()
 
 
 ALLOWED_HOSTS = [
-    'jo-ticketing-site-e53a4a320f9f.herokuapp.com',
+    'jo-ticketing-site-e53a4a320f9f.herokuapp.com', 
 ]
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -41,7 +41,7 @@ INSTALLED_APPS = [
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_PORT = config('EMAIL_PORT', default=587, cast=int)
+EMAIL_PORT = config('EMAIL_PORT', cast=int)
 EMAIL_USE_TLS = True
 EMAIL_HOST_USER = config('EMAIL_HOST_USER')
 EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD')
@@ -105,11 +105,11 @@ DATABASES = {
     "default": dj_database_url.config(default=config('DATABASE_URL')),  
     "mysql": {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': config('DB_NAME', default='jo_ticket'),
-        'USER': config('DB_USER', default='root'),  # Utilisez config pour obtenir l'utilisateur aussi
-        'PASSWORD': config('DB_PASSWORD', default='root'),
-        'HOST': config('DB_HOST', default='localhost'),
-        'PORT': config('DB_PORT', default='3306'),
+        'NAME': config('DB_NAME'),
+        'USER': config('DB_USER'), 
+        'PASSWORD': config('DB_PASSWORD'),
+        'HOST': config('DB_HOST'),
+        'PORT': config('DB_PORT'),
     }
 }
 
@@ -167,8 +167,6 @@ USE_TZ = True
 
 STATIC_URL = "static/"
 
-# Default primary key field type
-# https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
