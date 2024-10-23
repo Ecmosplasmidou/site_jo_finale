@@ -113,16 +113,16 @@ class SignUpView(generic.CreateView):
             self.send_confirmation_email(user)
         return response
     
-def send_confirmation_email(self, user):
-    subject = 'Confirmation de votre inscription'
-    message = render_to_string('welcome_email.html', {'user': user})  # Chemin correct vers le template
-    send_mail(
-        subject,
-        message,
-        settings.DEFAULT_FROM_EMAIL,
-        [user.email],
-        fail_silently=False,
-    )
+    def send_confirmation_email(self, user):
+        subject = 'Confirmation de votre inscription'
+        message = render_to_string('welcome_email.html', {'user': user})  # Chemin correct vers le template
+        send_mail(
+            subject,
+            message,
+            settings.DEFAULT_FROM_EMAIL,
+            [user.email],
+            fail_silently=False,
+        )
 
 def account(request):
     reservations = Reservation.objects.filter(user=request.user)
