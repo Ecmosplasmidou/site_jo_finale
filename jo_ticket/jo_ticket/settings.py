@@ -108,7 +108,7 @@ DATABASES = {
         'NAME': config('DB_NAME', default='jo_ticket'),
         'USER': config('DB_USER', default='root'),  # Utilisez config pour obtenir l'utilisateur aussi
         'PASSWORD': config('DB_PASSWORD', default='root'),
-        'HOST': config('DB_HOST'),
+        'HOST': config('DB_HOST', default='localhost'),
         'PORT': config('DB_PORT', default='3306'),
     }
 }
