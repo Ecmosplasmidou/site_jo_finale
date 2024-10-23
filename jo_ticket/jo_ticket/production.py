@@ -1,7 +1,11 @@
-from settings import *
+from .settings import *
 import os
 import dj_database_url
+from decouple import config
+from pathlib import Path
 
+
+DEBUG = True
 
 DATABASES = {
     'default': dj_database_url.config(
@@ -24,23 +28,21 @@ CACHES = {
     },
 }
 
-DEBUG = False
-
 LOGGING = {
     "version": 1,
     "disable_existing_loggers": False,
     "formatters": {
         "verbose": {
             "format": ("%(asctime)s [%(process)d] [%(levelname)s] " +
-                          "pathname=%(pathname)s lineno=%(lineno)s " +
-                          "funcname=%(funcName)s %(message)s"),
+                       "pathname=%(pathname)s lineno=%(lineno)s " +
+                       "funcname=%(funcName)s %(message)s"),
             "datefmt": "%Y-%m-%d %H:%M:%S",
         },
-    "simple": {
-        "format": "{levelname} {message}",
+        "simple": {
+            "format": "%(levelname)s %(message)s",  # Changez à '%' style
         },
     },
-    "handlers" : {
+    "handlers": {
         "null": {
             "level": "DEBUG",
             "class": "logging.NullHandler",
@@ -48,7 +50,7 @@ LOGGING = {
         "console": {
             "level": "DEBUG",
             "class": "logging.StreamHandler",
-            "formatter": "verbose"
+            "formatter": "verbose",
         }
     },
     "loggers": {
@@ -64,7 +66,7 @@ LOGGING = {
             "handlers": ["console"],
             "level": "DEBUG",
         },
-        "djago.request": {
+        "django.request": {  # Correction de la faute de frappe 'djago'
             "handlers": ["console"],
             "level": "DEBUG",
             "propagate": False,
@@ -76,3 +78,21 @@ LOGGING = {
         },
     },
 }
+
+
+# logout and login redirect
+LOGIN_REDIRECT_URL = 'home'
+LOGOUT_REDIRECT_URL = 'home'
+
+
+BASE_DIR = Path(__file__).resolve().parent.parent
+
+MEDIA_URL = config('MEDIA_URL', default='/media/')
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+STATIC_URL = config('STATIC_URL', default='/static/')
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
+STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]

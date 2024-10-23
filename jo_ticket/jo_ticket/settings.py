@@ -2,14 +2,18 @@ from pathlib import Path
 from django.contrib import messages
 from dotenv import load_dotenv
 from decouple import config
+import dj_database_url
 import os
-
 
 load_dotenv()
 
 
+ALLOWED_HOSTS = [
+    'jo-ticketing-site-e53a4a320f9f.herokuapp.com', 
+]
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
-BASE_DIR = Path(__file__).resolve().parent.parent
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 
 # Quick-start development settings - unsuitable for production
@@ -20,11 +24,6 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = config('DJANGO_SECRET_KEY', 'default-secret-key')
 STRIPE_SECRET_KEY = config('STRIPE_SECRET_KEY', 'default-stripe-secret-key')
 STRIPE_PUBLISHABLE_KEY = config('STRIPE_PUBLISHABLE_KEY', 'default-stripe-publishable-key')
-
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
-
-ALLOWED_HOSTS = config('ALLOWED_HOSTS', cast=lambda v: [s.strip() for s in v.split(',')])
 
 
 # Application definition
@@ -42,9 +41,9 @@ INSTALLED_APPS = [
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_PORT = 587
+EMAIL_PORT = config('EMAIL_PORT', cast=int)
 EMAIL_USE_TLS = True
-EMAIL_HOST_USER = 'ecmosdev@gmail.com'
+EMAIL_HOST_USER = config('EMAIL_HOST_USER')
 EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD')
 DEFAULT_FROM_EMAIL = config('DEFAULT_FROM_EMAIL')
 
@@ -58,7 +57,14 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    'django.middleware.locale.LocaleMiddleware',
 ]
+
+TIME_ZONE = 'Europe/Paris'
+
+USE_TZ = True
+
+USE_L10N = True
 
 
 MESSAGE_TAGS = {
@@ -96,17 +102,14 @@ WSGI_APPLICATION = "jo_ticket.wsgi.application"
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
 DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
-    },
+    "default": dj_database_url.config(default=config('DATABASE_URL')),  
     "mysql": {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': config('DB_NAME', default='jo_ticket'),
-        'USER': 'root',
-        'PASSWORD': config('DB_PASSWORD', default='root'),
-        'HOST': config('DB_HOST', default='localhost'),
-        'PORT': config('DB_PORT', default='3306'),
+        'NAME': config('DB_NAME'),
+        'USER': config('DB_USER'), 
+        'PASSWORD': config('DB_PASSWORD'),
+        'HOST': config('DB_HOST'),
+        'PORT': config('DB_PORT'),
     }
 }
 
@@ -134,12 +137,12 @@ LOGIN_REDIRECT_URL = 'home'
 LOGOUT_REDIRECT_URL = 'home'
 
 
-BASE_DIR = Path(__file__).resolve().parent.parent
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_URL = config('MEDIA_URL', default='/media/')
+MEDIA_ROOT = os.path.join(BASE_DIR, 'jo_ticket', 'media')
 
-STATIC_URL = '/static/'
+STATIC_URL = config('STATIC_URL', default='/static/')
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
@@ -164,18 +167,17 @@ USE_TZ = True
 
 STATIC_URL = "static/"
 
-# Default primary key field type
-# https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 CSRF_TRUSTED_ORIGINS = [
-    'http://localhost', 
-    'http://127.0.0.1', 
-    'http://Site_des_JO.com'
+    'http://Site_des_JO.com',
+    'http://jo-ticketing-site-e53a4a320f9f.herokuapp.com/'
 ]
 
-CSRF_COOKIE_DOMAIN = '.Site_des_JO.com'
+# CSRF_COOKIE_DOMAIN = '.Site_des_JO.com'
+
+CSRF_COOKIE_SECURE = True
 
 
 LOGGING = {
@@ -195,3 +197,8 @@ LOGGING = {
         "level": "DEBUG",
     },
 }
+
+# # Import production settings if DJANGO_SETTINGS_MODULE is set to production
+# if os.getenv('DJANGO_SETTINGS_MODULE') == 'jo_ticket.jo_ticket.production':
+#     from .production import *
+

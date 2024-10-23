@@ -15,3 +15,8 @@ class SignUpForm(UserCreationForm):
             if commit:
                 user.save()
             return user
+        
+class ContactUsForm(forms.Form):
+    nom = forms.CharField(required=False,  max_length=50)
+    email = forms.EmailField(max_length=100)
+    message = forms.CharField(widget=forms.Textarea)

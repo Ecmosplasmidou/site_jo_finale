@@ -19,7 +19,8 @@ jobs:
         strategy:
             max-parallel: 2
             matrix:
-                python-version: [3.8, 3.9, 3.11, 3.12] 
+                python-version: [3.11, 3.12] 
+
                 django-version: [3.2, 4.0, 4.1]
 
         steps:
@@ -29,7 +30,8 @@ jobs:
             - name: Set up Python
               uses: actions/setup-python@v2
               with:
-                  python-version: 3.11
+                  python-version: ${{ matrix.python-version }} # Utiliser la version de la matrice
+
             
             - name: Install dependencies
               run: |
@@ -39,7 +41,7 @@ jobs:
     deploy:
         runs-on: ubuntu-latest
         name: Deploy Django Application
-        needs: [build]
+        needs: build
         steps:
             - name: Checkout Code Repository
               uses: actions/checkout@v2

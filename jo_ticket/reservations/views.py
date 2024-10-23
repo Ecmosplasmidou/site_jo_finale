@@ -13,6 +13,7 @@ from django.views import generic
 from django.urls import reverse_lazy
 from django.contrib.auth.forms import UserCreationForm
 from django.template.loader import render_to_string
+from .forms import ContactUsForm
 import uuid
 import stripe
 import io
@@ -82,6 +83,8 @@ def checkout(request, reservation_id):
         'session_id': session.id,
         'stripe_public_key': stripe_public_key,
         'total': total,
+        'reservation': reservation,
+        'offer': cart.offers.all()
     })
 
 
@@ -107,7 +110,19 @@ class SignUpView(generic.CreateView):
         user = authenticate(username=username, password=password)
         if user is not None:
             login(self.request, user)
+            self.send_confirmation_email(user)
         return response
+    
+    def send_confirmation_email(self, user):
+        subject = 'Confirmation de votre inscription'
+        message = render_to_string('welcome_email.html', {'user': user})  # Chemin correct vers le template
+        send_mail(
+            subject,
+            message,
+            settings.DEFAULT_FROM_EMAIL,
+            [user.email],
+            fail_silently=False,
+        )
 
 def account(request):
     reservations = Reservation.objects.filter(user=request.user)
@@ -130,9 +145,16 @@ def add_to_cart(request, offer_id):
     if request.method == 'POST':
         offer = get_object_or_404(Offer, id=offer_id)
         cart, created = Cart.objects.get_or_create(user=request.user)
+        
+        # Vérifiez si l'offre est déjà dans le panier
+        if cart.offers.filter(id=offer_id).exists():
+            messages.info(request, 'Le billet est déjà dans votre panier.')
+            return JsonResponse({'message': 'Le billet est déjà dans votre panier.'}, status=200)
+        
         cart.offers.add(offer)
-        # messages.success(request, 'Le billet à été ajoutée au panier !')
+        messages.success(request, 'Le billet a été ajouté au panier !')
         return JsonResponse({'message': 'Offre ajoutée au panier !'}, status=200)
+    
     return JsonResponse({'error': 'Requête invalide.'}, status=400)
 
 
@@ -140,12 +162,13 @@ def add_to_cart(request, offer_id):
 def cart(request):
     try:
         cart = Cart.objects.get(user=request.user)
+        offers = cart.offers.all()
         total = sum([offer.price for offer in cart.offers.all()])
-        
     except Cart.DoesNotExist:
         cart = Cart.objects.create(user=request.user)
+        offers = []
         total = 0
-    return render(request, 'cart.html', {'cart': cart, 'total' : total})
+    return render(request, 'cart.html', {'cart': cart, 'total': total, 'offers': offers})
 
 
 def remove_from_cart(request, offer_id):
@@ -170,7 +193,7 @@ def payement_success(request, reservation_id):
         total_price = 0
         
         for offer in cart.offers.all():
-            items_detail += f"{offer.name} - {offer.price}€\n"
+            items_detail += f"{offer.name} - \n"
             total_price += offer.price
 
         qr_data = f"""
@@ -195,6 +218,8 @@ def payement_success(request, reservation_id):
         
         buffer = io.BytesIO()
         img.save(buffer)
+        buffer.seek(0)  # Assurez-vous que le buffer est réinitialisé avant l'attachement
+        
         qr_image = base64.b64encode(buffer.getvalue()).decode()
         
         reservation.qr_code = qr_image
@@ -207,9 +232,11 @@ def payement_success(request, reservation_id):
             'total_price': total_price,
             'account_url': request.build_absolute_uri('/account/')
         })
+        
         recipient_list = [stripe_email]  
         email = EmailMultiAlternatives(subject, html_content, 'ecmosdev@gmail.com', recipient_list)
         email.attach_alternative(html_content, "text/html")
+        email.content_subtype = 'html'  # Définir le contenu en HTML
         email.attach('qrcode.png', buffer.getvalue(), 'image/png')
         email.send()
         
@@ -226,6 +253,25 @@ def payement_success(request, reservation_id):
     else:
         messages.error(request, 'Le paiement a échoué.')
         return redirect('cart')
+
+    
+def contact(request):
+    if request.method == 'POST':
+        form = ContactUsForm(request.POST)
+        
+        if form.is_valid():
+            send_mail(subject=f"Message from {form.cleaned_data['nom'] or 'Anonyme'} - {form.cleaned_data['email']} via MerchEx Contact Form Us Page",
+            message=form.cleaned_data['message'],
+            from_email=form.cleaned_data['email'],
+            recipient_list=['ecmosdev@gmail.com'],)
+            messages.success(request, 'Votre message a bien été envoyé.')
+        return redirect('email-sent')
+    else:
+        form = ContactUsForm()
+    return render (request, "contact.html", {"form": form})
+
+def email_sent(request):
+    return render(request, "email_sent.html")
 
 def payement_cancel(request, reservation_id):
     reservation = get_object_or_404(Reservation, pk=reservation_id)
